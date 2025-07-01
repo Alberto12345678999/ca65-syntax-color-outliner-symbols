@@ -1,0 +1,21 @@
+{
+  "name": "code-ca65-1-2-6",
+  "displayName": "code-ca65-1.2.6",
+  "description": "\"Provides language support for the ca65 macro assembler.\"",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "CA65-ASM-Color",
+        "uiTheme": "hc-black",
+        "path": "./themes/CA65-ASM-Color-color-theme.json"
+      }
+    ]
+  }
+}
