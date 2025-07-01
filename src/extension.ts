@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { asm6502DocumentSymbolProvider } from './DocumentSymbolProvider';
+import { asm6502DocumentSymbolProvider } from '../DocumentSymbolProvider';
 
 export function activateDocumentSymbolProvider(context: vscode.ExtensionContext) {
     const provider = new asm6502DocumentSymbolProvider();
