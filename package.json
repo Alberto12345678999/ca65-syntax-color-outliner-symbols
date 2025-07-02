@@ -1,10 +1,10 @@
 {
-	"name": "code-ca65",
+	"name": "code-ca65-syntax-color-outliner-symbols",
 	"icon": "images/icon.png",
 	"displayName": "ca65 Macro Assembler Language Support (6502/65816)",
 	"description": "Provides language support for the ca65 macro assembler.",
 	"version": "1.2.6",
-	"publisher": "albertopilotto",
+	"publisher": "alberto-pilotto",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/albertopilotto/code-ca65"
