@@ -3,7 +3,7 @@
 	"icon": "images/icon.png",
 	"displayName": "ca65 Macro Assembler Language Support (6502/65816) (Orig: Cole Campbell | Mod: Alberto Pilotto)",
 	"description": "Provides language support for the ca65 macro assembler. Now includes syntax highlighting, code outlining, and symbol navigation.",
-	"version": "1.2.7",
+	"version": "1.2.8",
 	"publisher": "alberto-pilotto",
 	"repository": {
 		"type": "git",
