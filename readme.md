@@ -95,7 +95,7 @@ This configuration ensures that TypeScript files are compiled into JavaScript an
 
 To experience the color changes provided by this extension, switch your theme to 'CA65-ASM-Color' immediately after installation. You can do this by navigating to `File > Preferences > Theme > Color Theme` or using the `Preferences: Color Theme` command (`Ctrl+K Ctrl+T`).
 
-![CA65-ASM-Color Theme Preview](images/icon.png)
+![CA65-ASM-Color Theme Preview](images/REMEMBER_TO_SWITCH_THEMES.png)
 
 ## Release Notes
 
