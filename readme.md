@@ -91,6 +91,12 @@ Here is an example `tasks.json` configuration:
 
 This configuration ensures that TypeScript files are compiled into JavaScript and output to the `out` directory. Users can run this task by selecting it in the VS Code Task Runner.
 
+## Switch to CA65-ASM-Color Theme
+
+To experience the color changes provided by this extension, switch your theme to 'CA65-ASM-Color' immediately after installation. You can do this by navigating to `File > Preferences > Theme > Color Theme` or using the `Preferences: Color Theme` command (`Ctrl+K Ctrl+T`).
+
+![CA65-ASM-Color Theme Preview](images/icon.png)
+
 ## Release Notes
 
 ### 1.2.6

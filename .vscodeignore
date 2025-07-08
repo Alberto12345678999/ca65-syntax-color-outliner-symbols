@@ -8,3 +8,5 @@ vsc-extension-quickstart.md
 **/tslint.json
 **/*.map
 **/*.ts
+# Ensure the out/extension.js file is included
+!out/extension.js

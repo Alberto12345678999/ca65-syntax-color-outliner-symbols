@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
-import { asm6502DocumentSymbolProvider } from '../DocumentSymbolProvider';
+import { asm6502DocumentSymbolProvider } from './DocumentSymbolProvider';
 
 let taskProvider: vscode.Disposable | undefined;
 let ld65ConfigWatcher: vscode.FileSystemWatcher | undefined;
