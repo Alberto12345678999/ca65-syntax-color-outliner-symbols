@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
             resolveTask(_task: vscode.Task, _token?: vscode.CancellationToken): vscode.Task | undefined {
                 return undefined;
             }
-        } as vscode.TaskProvider<vscode.Task>);
+        } as vscode.TaskProvider);
     }
 
     // Example of a command registration

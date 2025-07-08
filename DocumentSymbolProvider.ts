@@ -118,7 +118,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
     // Pass 2: detect label references and nest under defining symbol
     for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
       const line = lines[lineNumber];
-      for (const [labelName, parentSymbol] of labelDefs.entries()) {
+      for (const [labelName, parentSymbol] of Array.from(labelDefs.entries())) {
         const refRegex = new RegExp(`\\b${labelName}\\b`);
         if (refRegex.test(line)) {
           if (line.trim().startsWith(labelName + ':')) continue; // skip the label definition line
