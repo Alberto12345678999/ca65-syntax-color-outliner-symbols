@@ -68,6 +68,29 @@ You can use these problem matchers in `task.json` using the normal syntax.
 }
 ```
 
+## Using tasks.json for Compilation
+
+To ensure other users can compile the project easily, include a `tasks.json` file in the `.vscode` folder of your workspace. This file defines tasks for building and running the project.
+
+Here is an example `tasks.json` configuration:
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile TypeScript",
+            "type": "shell",
+            "command": "npx tsc",
+            "group": "build",
+            "problemMatcher": ["$tsc"]
+        }
+    ]
+}
+```
+
+This configuration ensures that TypeScript files are compiled into JavaScript and output to the `out` directory. Users can run this task by selecting it in the VS Code Task Runner.
+
 ## Release Notes
 
 ### 1.2.6
