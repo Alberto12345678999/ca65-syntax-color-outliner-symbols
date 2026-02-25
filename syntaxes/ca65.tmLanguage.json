@@ -156,8 +156,10 @@
 				"match": "\\b(?:\\.macro|\\.endmacro)\\b"
 			}, {
 				"comment": "Macro Function Names",
-				"name": "entity.name.function.preprocessor.ca65",
-				"match": "(?<=\\.macro\\s+)\\w+"
+				"match": "\\.macro\\s+(\\w+)",
+				"captures": {
+					"1": { "name": "entity.name.function.preprocessor.ca65" }
+				}
 			}, {
 				"comment": "Variables Definition in Macros, insert per game project",
 				"name": "variable.parameter.preprocessor.ca65",
@@ -172,8 +174,10 @@
 				"match": "^(\\w+):"
 			}, {
 				"comment": "Procedure Directives",
-				"name": "entity.name.function.procedure.ca65",
-				"match": "(?<=\\.(proc|macro|import|word|addr|export|segment)\\s+)\\w+"
+				"match": "\\.(proc|macro|import|word|addr|export|segment)\\s+(\\w+)",
+				"captures": {
+					"2": { "name": "entity.name.function.procedure.ca65" }
+				}
 			}, {
 				"comment": "Local Label Reference Matching",
 				"name": "entity.name.label.reference.local.ca65",
