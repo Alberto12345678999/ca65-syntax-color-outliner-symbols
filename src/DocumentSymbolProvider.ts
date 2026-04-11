@@ -42,12 +42,13 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
       const endBlockMatch = line.match(/^[ \t]*\.(endproc|endmacro)\b/i);
       if (endBlockMatch) {
         const endLine = lineNumber + 1;
-        const current = endBlockMatch[1] === 'endproc' ? currentGlobalParent : currentMacroParent;
+        const endType = endBlockMatch[1].toLowerCase();
+        const current = endType === 'endproc' ? currentGlobalParent : currentMacroParent;
         if (current) {
           current.range = new vscode.Range(current.range.start, new vscode.Position(endLine, 0));
         }
-        if (endBlockMatch[1] === 'endproc') currentGlobalParent = null;
-        if (endBlockMatch[1] === 'endmacro') currentMacroParent = null;
+        if (endType === 'endproc') currentGlobalParent = null;
+        if (endType === 'endmacro') currentMacroParent = null;
         continue;
       }
 
