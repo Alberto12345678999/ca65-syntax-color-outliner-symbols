@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     activateDocumentSymbolProvider(context);
 
-    let workspaceRoot = vscode.workspace.rootPath;
+    const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
     if (workspaceRoot) {
         let ca65Promise: Thenable<vscode.Task[]> | undefined = undefined;
 
@@ -106,22 +106,24 @@ async function getAssemblerTasks(): Promise<vscode.Task[]> {
 
     let editor = vscode.window.activeTextEditor;
     if (editor && editor.document && editor.document.fileName && editor.document.languageId === "ca65") {
+        const workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
+        const workspaceRoot = workspaceFolder?.uri.fsPath;
         let input: string = editor.document.fileName;
 
-        if (vscode.workspace.rootPath) {
+        if (workspaceRoot) {
             try {
                 const readFile = util.promisify(fs.readFile);
-                const readFileData = await readFile(path.join(vscode.workspace.rootPath || "", "cl65config.json"), "utf-8");
+                const readFileData = await readFile(path.join(workspaceRoot, "cl65config.json"), "utf-8");
                 cl65Config = JSON.parse(readFileData);
             } catch (err) { }
 
             if (cl65Config && cl65Config.input) {
-                input = path.resolve(vscode.workspace.rootPath, cl65Config.input);
+                input = path.resolve(workspaceRoot, cl65Config.input);
             }
 
             let cfgs = await vscode.workspace.findFiles("**/*.cfg");
             for (let cfg of cfgs) {
-                let buildLinkerConfigFileRel = path.relative(vscode.workspace.rootPath, cfg.fsPath);
+                let buildLinkerConfigFileRel = path.relative(workspaceRoot, cfg.fsPath);
                 let buildLinkerConfigFileAbs = path.resolve(cfg.fsPath);
                 let buildTaskDef: AssemblerTaskDefinition = { type: "ca65", config: buildLinkerConfigFileRel };
                 let buildTask = new vscode.Task(buildTaskDef, vscode.TaskScope.Workspace, `Build with ${buildLinkerConfigFileRel}`, "ca65",
