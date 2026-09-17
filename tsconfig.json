@@ -1,17 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES2015",
-    "module": "commonjs",
+    "module": "node16",
     "outDir": "./out",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "downlevelIteration": true,
-    "moduleResolution": "node",
-    "baseUrl": "./src",
+    "moduleResolution": "node16",
     "paths": {
-      "*": ["*"]
+      "*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts"],
