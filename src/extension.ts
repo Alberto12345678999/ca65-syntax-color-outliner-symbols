@@ -4,7 +4,8 @@ import * as fs from 'fs';
 import * as util from 'util';
 import { asm6502DocumentSymbolProvider } from './DocumentSymbolProvider';
 
-// This method is called when the extension is activated. It sets up the document symbol provider and registers tasks for the CA65 assembler.
+/* This method is called when the extension is activated. It sets up the document symbol provider and registers tasks for the CA65 assembler.
+*/
 let taskProvider: vscode.Disposable | undefined;
 let ld65ConfigWatcher: vscode.FileSystemWatcher | undefined;
 let cl65ConfigWatcher: vscode.FileSystemWatcher | undefined;
@@ -14,7 +15,7 @@ export function activateDocumentSymbolProvider(context: vscode.ExtensionContext)
     context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider({ language: 'ca65' }, provider));
 }
 
-// This is the main entry point for the CA65 extension in Visual Studio Code.
+// This is the main entry point for the CA65 extension in VS Code.
 export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "ca65" is now active!');
 
@@ -46,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
         } as vscode.TaskProvider);
     }
 
-    // Example of a command registration
+    // Example of a command registration:
     let disposable = vscode.commands.registerCommand('ca65.helloWorld', () => {
         vscode.window.showInformationMessage('Hello World from CA65!');
     });
@@ -66,19 +67,24 @@ export function deactivate() {
     console.log('Extension "ca65" has been deactivated.');
 }
 
-// Define the AssemblerTaskDefinition interface to represent the structure of a CA65 task definition.
+
+
+
+// The `AssemblerTaskDefinition` interface represents the structure of a CA65 task definition.
 interface AssemblerTaskDefinition extends vscode.TaskDefinition {
     config: string | undefined;
 }
 
-// Define the AssemblerCL65ConfigurationDefinition interface to represent the structure of a CA65 configuration.
+
+// The `AssemblerCL65ConfigurationDefinition` interface represents the structure of a CA65 configuration.
 interface AssemblerCL65ConfigurationDefinition {
     executable: string | undefined;
     input: string | undefined;
     params: string | undefined;
 }
 
-// This function constructs the command line for the CA65 assembler based on the provided file name, linker configuration, and assembler configuration.
+/* This function constructs the command line for the CA65 assembler based on the provided file name, linker configuration, and assembler configuration.
+*/
 function getAssemblerCommandLine(fileName: string, ld65Config: string | undefined, cl65Config: AssemblerCL65ConfigurationDefinition | undefined): string {
     let cli = "";
     if (cl65Config && cl65Config.executable) {
@@ -99,7 +105,8 @@ function getAssemblerCommandLine(fileName: string, ld65Config: string | undefine
     return cli;
 }
 
-// This asynchronous function retrieves the available assembler tasks for the CA65 extension, based on the current workspace and configuration files.
+/* This asynchronous function retrieves the available assembler tasks for the CA65 extension, based on the current workspace and configuration files.
+*/
 async function getAssemblerTasks(): Promise<vscode.Task[]> {
     let tasks: vscode.Task[] = [];
     let cl65Config: AssemblerCL65ConfigurationDefinition | undefined = undefined;
