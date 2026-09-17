@@ -14,7 +14,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
     for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
       const line = lines[lineNumber].trim();
 
-      // Match .proc block
+      // Match `.proc` block:
       const procMatch = line.match(/^[ \t]*\.proc[ \t]+([A-Za-z_][\w@#]*)/i);
       if (procMatch) {
         const name = procMatch[1];
@@ -26,7 +26,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
         continue;
       }
 
-      // Match .macro block
+      // Match `.macro` block:
       const macroMatch = line.match(/^[ \t]*\.macro[ \t]+([A-Za-z_][\w@#]*)/i);
       if (macroMatch) {
         const name = macroMatch[1];
@@ -38,7 +38,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
         continue;
       }
 
-      // End of .proc or .macro
+      // End of `.proc` or `.macro`:
       const endBlockMatch = line.match(/^[ \t]*\.(endproc|endmacro)\b/i);
       if (endBlockMatch) {
         const endLine = lineNumber + 1;
@@ -52,7 +52,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
         continue;
       }
 
-      // Match standalone global label
+      // Match standalone global label:
       const globalLabelMatch = line.match(/^[ \t]*([A-Za-z_][\w@#]*):/);
       if (globalLabelMatch) {
         const name = globalLabelMatch[1];
@@ -71,7 +71,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
         continue;
       }
 
-      // Match local label (.label: or @label:)
+      // Match local label (`.label`: or `@label`:);
       const localLabelMatch = line.match(/^[ \t]*([.@](?!proc|macro|endproc|endmacro)[\w@#]+):/i);
       if (localLabelMatch) {
         const name = localLabelMatch[1];
@@ -86,7 +86,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
         }
         continue;
       }
-      // Match simple defines/constants (e.g., VAR = $2002)
+      // Match simple defines/constants (e.g., `VAR = $2002`);
       const defineRegex = /^\s*([A-Za-z_][\w]*)\s*=\s*([^;]+)/;
       const defineMatch = defineRegex.exec(line);
       if (defineMatch) {
@@ -102,7 +102,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
       }
 
 
-      // Match common assembler directives (structural, not labels)
+      // Match common assembler directives (structural, not labels);
       const directiveMatch = line.match(/^[ \t]*\.(A16|A8|ADDR|ALIGN|ASCIIZ|ASSERT|AUTOIMPORT|BANKBYTES|BSS|BYT|BYTE|CASE|CHARMAP|CODE|CONDES|CONSTRUCTOR|DATA|DBT|DEBUGINFO|DEFINE|DELMAC|DELMACRO|DESTRUCTOR|DWORD|ELSE|ELSEIF|END|ENDENUM|ENDIF|ENDMAC|ENDREP|ENDREPEAT|ENDSCOPE|ENDSTRUCT|ENDUNION|ENUM|ERROR|EXITMAC|EXPORT|EXPORTZP|FARADDR|FATAL|FEATURE|FILEOPT|FOPT|FORCEIMPORT|GLOBAL|GLOBALZP|HIBYTES|I16|I8|IF|IFBLANK|IFCONST|IFDEF|IFNBLANK|IFNDEF|IFNREF|IFP02|IFP4510|IFP816|IFPC02|IFPDTV|IFPSC02|IFREF|IMPORT|IMPORTZP|INCBIN|INCLUDE|INTERRUPTOR|LIST|LISTBYTES|LITERAL|LOBYTES|LOCAL|LOCALCHAR|MACPACK|ORG|OUT|P02|P4510|P816|PAGELEN|PAGELENGTH|PC02|PDTV|POPCHARMAP|POPCPU|POPSEG|PSC02|PUSHCHARMAP|PUSHCPU|PUSHSEG|REFERTO|REFTO|RELOC|REPEAT|RES|RODATA|SCOPE|SEGMENT|SET|SETCPU|SMART|STRUCT|TAG|UNDEF|UNDEFINE|UNION|WARNING|WORD|ZEROPAGE)\b\s*(.*)/i);
       if (directiveMatch) {
         const directive = directiveMatch[1];
@@ -116,7 +116,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
 
     } // <-- Add this closing brace to end the first for-loop
 
-    // Pass 2: detect label references and nest under defining symbol
+    // Pass 2: detect label references and nest under defining symbol:
     for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
       const line = lines[lineNumber];
       for (const [labelName, parentSymbol] of Array.from(labelDefs.entries())) {
@@ -134,16 +134,17 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
       }
     }
 
-    // Pass 3: detect local label references and nest under defining symbol
-    // To avoid mutating the array while iterating, collect new refs first
+    /* Pass 3: detect local label references and nest under defining symbol,
+    * To avoid mutating the array while iterating, collect new refs first.
+    */
     const createSymbol = this.createSymbol.bind(this);
     for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
       const line = lines[lineNumber];
-      // Loop over symbols to find locals (starting with '.' or '@')
+      // Loop over symbols to find locals (starting with '.' or '@');
       for (const parent of symbols) {
         if (!parent.children)
           continue;
-        // Collect new references to add after iteration
+        // Collect new references to add after iteration:
         const newRefs = [];
         for (const child of parent.children) {
           if (!child.name.startsWith('.') && !child.name.startsWith('@'))
@@ -157,7 +158,7 @@ export class asm6502DocumentSymbolProvider implements vscode.DocumentSymbolProvi
             newRefs.push(refSymbol);
           }
         }
-        // Add all new references after the loop
+        // Add all new references after the loop:
         if (newRefs.length > 0) {
           parent.children.push(...newRefs);
         }
